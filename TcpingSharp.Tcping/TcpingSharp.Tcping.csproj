@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <Nullable>enable</Nullable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <PackageVersion>1.0.25-rc</PackageVersion>
+        <Title>TcpingSharp.Tcping</Title>
+        <Description>A lightweight TCP pinging client for .NET projects.</Description>
+        <Copyright>Copyright (C) 2020 Elepover</Copyright>
+        <PackageProjectUrl>https://github.com/Elepover/tcpingsharp</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/Elepover/tcpingsharp/blob/master/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/Elepover/tcpingsharp</RepositoryUrl>
+        <RepositoryType>public</RepositoryType>
+        <PackageTags>tcping, tcp, client, framework</PackageTags>
+        <PackageReleaseNotes>Initial</PackageReleaseNotes>
+    </PropertyGroup>
+
+</Project>

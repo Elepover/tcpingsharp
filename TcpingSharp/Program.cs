@@ -14,7 +14,7 @@ namespace TcpingSharp
     public static class Program
     {
         private const int PrintStatsInterval = 25;
-        private const string ApplicationVersion = "1.0.24a";
+        private const string ApplicationVersion = "1.0.25r";
         private static int _exitCounter = 0;
         private static int _eventCounter = 0;
         private static Stopwatch _stopwatch = new Stopwatch();
