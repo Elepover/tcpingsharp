@@ -14,7 +14,8 @@
         <RepositoryUrl>https://github.com/Elepover/tcpingsharp</RepositoryUrl>
         <RepositoryType>public</RepositoryType>
         <PackageTags>tcping, tcp, client, framework</PackageTags>
-        <PackageReleaseNotes>Initial</PackageReleaseNotes>
+        <PackageReleaseNotes>Added XML annotations.
+Now TcpingClient stores statistics data always the same internally. You can always switch Stats output by switching RealRtt option.</PackageReleaseNotes>
     </PropertyGroup>
 
 </Project>
