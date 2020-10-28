@@ -3,7 +3,7 @@ using System.Net;
 
 namespace TcpingSharp
 {
-    public static class Utils
+    internal static class Utils
     {
         public static IPAddress[] ParseAddresses(string host, bool allowMultipleIps = true)
         {

@@ -14,7 +14,7 @@ namespace TcpingSharp
     public static class Program
     {
         private const int PrintStatsInterval = 25;
-        private const string ApplicationVersion = "1.0.25r";
+        private const string ApplicationVersion = "1.0.26b";
         private static int _exitCounter = 0;
         private static int _eventCounter = 0;
         private static Stopwatch _stopwatch = new Stopwatch();
@@ -96,10 +96,13 @@ namespace TcpingSharp
             IPAddress[] addresses;
             try
             {
+                Console.Write("Resolving addresses...");
                 addresses = Utils.ParseAddresses(opts.TcpingTarget, opts.ResolveMultipleIPs);
+                Utils.EraseLine();
             }
             catch (Exception ex)
             {
+                Utils.EraseLine();
                 WriteErrorLine($"Supplied hostname ({opts.TcpingTarget}) cannot be resolved: {ex}");
                 Environment.Exit(ex.HResult);
                 return;
@@ -136,7 +139,7 @@ namespace TcpingSharp
             #endregion
 
             #region Initialize tcping client
-            var client = new TcpingClient(addresses, opts.Port, opts.RealRtt) { Timeout = opts.Timeout };
+            var client = new TcpingClient(addresses, opts.Port) { RealRtt = opts.RealRtt, Timeout = opts.Timeout };
             #endregion
             
             #region Subscribe event handlers
