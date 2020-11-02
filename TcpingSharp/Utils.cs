@@ -1,11 +1,12 @@
 using System;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace TcpingSharp
 {
     internal static class Utils
     {
-        public static IPAddress[] ParseAddresses(string host, bool allowMultipleIps = true)
+        public static async Task<IPAddress[]> ParseAddressesAsync(string host, bool allowMultipleIps = true)
         {
             try
             {
@@ -13,7 +14,7 @@ namespace TcpingSharp
             }
             catch
             {
-                var addresses = Dns.GetHostAddresses(host);
+                var addresses = await Dns.GetHostAddressesAsync(host);
                 return allowMultipleIps ? addresses : new[] {addresses[0]};
             }
         }
