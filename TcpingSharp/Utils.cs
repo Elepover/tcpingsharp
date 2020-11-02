@@ -9,12 +9,12 @@ namespace TcpingSharp
         {
             try
             {
-                return new[] { IPAddress.Parse(host) };
+                return new[] {IPAddress.Parse(host)};
             }
             catch
             {
                 var addresses = Dns.GetHostAddresses(host);
-                return allowMultipleIps ? addresses : new[] { addresses[0] };
+                return allowMultipleIps ? addresses : new[] {addresses[0]};
             }
         }
 

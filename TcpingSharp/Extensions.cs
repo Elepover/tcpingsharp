@@ -19,6 +19,7 @@ namespace TcpingSharp
                 sb.Append(obj);
                 sb.Append(", ");
             }
+
             sb.Remove(sb.Length - 2, 2);
             return sb.ToString();
         }
@@ -27,7 +28,7 @@ namespace TcpingSharp
         public static double StdDev(this IEnumerable<double> src)
         {
             if (src is null) throw new ArgumentNullException(nameof(src));
-            
+
             double standardDeviation = 0;
 
             if (!src.Any()) return standardDeviation;
@@ -38,7 +39,7 @@ namespace TcpingSharp
             var sum = src.Sum(d => Math.Pow(d - avg, 2));
 
             // Put it all together.
-            standardDeviation = Math.Sqrt((sum) / (src.Count()-1));
+            standardDeviation = Math.Sqrt((sum) / (src.Count() - 1));
 
             return standardDeviation;
         }

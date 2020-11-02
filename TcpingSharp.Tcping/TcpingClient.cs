@@ -26,21 +26,22 @@ namespace TcpingSharp.Tcping
             Port = port;
 
             _stats = new Dictionary<IPAddress, List<double>>();
-            
+
             foreach (var address in Addresses)
             {
                 _stats.Add(address, new List<double>());
             }
         }
-        
+
         private readonly Dictionary<IPAddress, List<double>> _stats;
         private readonly List<Thread> _workers = new List<Thread>();
         private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
-        
+
         /// <summary>
         /// Raised when a TCP ping result is generated.
         /// </summary>
         public event TcpingRespondedEventHandler? TcpingResponded;
+
         public delegate void TcpingRespondedEventHandler(object? sender, TcpingRespondedEventArgs e);
 
         /// <summary>
@@ -52,7 +53,7 @@ namespace TcpingSharp.Tcping
         /// Target port.
         /// </summary>
         public int Port { get; }
-        
+
         /// <summary>
         /// Ping timeout.
         /// </summary>
@@ -64,7 +65,7 @@ namespace TcpingSharp.Tcping
         /// Doesn't affect how statistics data are stored internally (always 2xRTT).
         /// </summary>
         public bool RealRtt { get; set; } = false;
-        
+
         /// <summary>
         /// Statistics data.<br />
         /// Depends on <see cref="RealRtt"/> option, this will deliver different results.
@@ -91,12 +92,12 @@ namespace TcpingSharp.Tcping
                 return new ReadOnlyDictionary<IPAddress, ReadOnlyCollection<double>>(tempDictionary);
             }
         }
-        
+
         /// <summary>
         /// Indicates whether current <see cref="TcpingClient"/> is busy.
         /// </summary>
         public bool IsActive => _workers.Any(x => x.IsAlive);
-        
+
         /// <summary>
         /// Indicates whether cancellation of current <see cref="TcpingClient"/> is requested.
         /// </summary>
@@ -110,8 +111,9 @@ namespace TcpingSharp.Tcping
         public void Stop(bool force = false)
         {
             if (!(IsActive || force)) throw new InvalidOperationException($"The {nameof(TcpingClient)} isn't active.");
-            if (IsCancellationRequested) throw new InvalidOperationException($"The {nameof(TcpingClient)} has been requested to stop.");
-            
+            if (IsCancellationRequested)
+                throw new InvalidOperationException($"The {nameof(TcpingClient)} has been requested to stop.");
+
             _cancellationTokenSource.Cancel();
         }
 
@@ -126,7 +128,7 @@ namespace TcpingSharp.Tcping
             while (IsActive && !(cancellationToken?.IsCancellationRequested ?? false))
                 await Task.Delay(10);
         }
-        
+
         /// <summary>
         /// Start this <see cref="TcpingClient"/>
         /// </summary>
@@ -134,8 +136,9 @@ namespace TcpingSharp.Tcping
         public void Start()
         {
             if (IsActive) throw new InvalidOperationException($"{nameof(TcpingClient)} has already started.");
-            if (IsCancellationRequested) throw new InvalidOperationException("Cannot start again after stop requested.");
-            
+            if (IsCancellationRequested)
+                throw new InvalidOperationException("Cannot start again after stop requested.");
+
             foreach (var address in Addresses)
             {
                 var thread = new Thread(() => Tcping(address));
@@ -143,12 +146,12 @@ namespace TcpingSharp.Tcping
                 thread.Start();
             }
         }
-        
+
         private void Tcping(IPAddress address)
         {
             while (!_cancellationTokenSource.IsCancellationRequested)
             {
-                using (var socket = new Socket(SocketType.Stream, ProtocolType.Tcp) { Blocking = true })
+                using (var socket = new Socket(SocketType.Stream, ProtocolType.Tcp) {Blocking = true})
                 {
                     var statsList = _stats[address];
                     var sw = new Stopwatch();
@@ -163,20 +166,25 @@ namespace TcpingSharp.Tcping
                             // apparently timed out
                             throw new TimeoutException("Timed out waiting for response");
                         }
+
                         if (_cancellationTokenSource.IsCancellationRequested) return;
-                        
+
                         statsList.Add(time);
-                        TcpingResponded?.Invoke(this, new TcpingRespondedEventArgs(address, Port, statsList.Count, RealRtt ? time / 2 : time));
+                        TcpingResponded?.Invoke(this,
+                            new TcpingRespondedEventArgs(address, Port, statsList.Count, RealRtt ? time / 2 : time));
                     }
                     catch (Exception ex)
                     {
                         if (ex is OperationCanceledException) return;
                         if (ex is AggregateException && !(ex.InnerException is null))
                             ex = ex.InnerException;
-                        
+
                         statsList.Add(0);
-                        TcpingResponded?.Invoke(this, new TcpingRespondedEventArgs(address, Port, statsList.Count, sw.Elapsed.TotalMilliseconds, ex));
+                        TcpingResponded?.Invoke(this,
+                            new TcpingRespondedEventArgs(address, Port, statsList.Count, sw.Elapsed.TotalMilliseconds,
+                                ex));
                     }
+
                     socket.Close();
                 }
 
@@ -186,7 +194,9 @@ namespace TcpingSharp.Tcping
                     Task.Delay(1000, _cancellationTokenSource.Token).Wait();
                 }
                 // ReSharper disable once EmptyGeneralCatchClause
-                catch { }
+                catch
+                {
+                }
             }
         }
     }

@@ -8,7 +8,7 @@ namespace TcpingSharp.CommandLine
     public class CommandLineParser
     {
         /// <summary>
-        /// Parse a command line argument to options, 
+        /// Parse a command line argument to options,
         /// </summary>
         /// <param name="args">Arguments to resolve</param>
         /// <param name="knownOptions"></param>
@@ -28,12 +28,14 @@ namespace TcpingSharp.CommandLine
                     if (!(currentOption is null))
                     {
                         // yes! oh no, it's awaiting value, this is not supposed to happen
-                        throw new ArgumentException($"Option {currentOption.Value.Item2.LongFlag?[0]} requires a value.");
+                        throw new ArgumentException(
+                            $"Option {currentOption.Value.Item2.LongFlag?[0]} requires a value.");
                     }
-                    
+
                     // search in knownOptions
                     var matchingOption = knownOptions.FirstOrDefault(x =>
-                        x.Item2.HasFlag && ((x.Item2.LongFlag?.Contains(arg) ?? false) || (x.Item2.ShortFlag?.Contains(arg) ?? false)));
+                        x.Item2.HasFlag && ((x.Item2.LongFlag?.Contains(arg) ?? false) ||
+                                            (x.Item2.ShortFlag?.Contains(arg) ?? false)));
                     if (matchingOption == default)
                     {
                         // no, it's invalid, just skip it.
@@ -86,7 +88,7 @@ namespace TcpingSharp.CommandLine
                     }
                 }
             }
-            
+
             // phase 2: check knownOptions to find if any mandatory option is missing
             foreach (var option in knownOptions)
             {
@@ -105,14 +107,17 @@ namespace TcpingSharp.CommandLine
                             if (string.IsNullOrEmpty(optionArg)) optionArg = "(anonymous)";
                             throw new ArgumentException($"Option {optionArg} is required.");
                         }
+
                         // yes it has! then we just add a new value
                         optionList.Add(option.Item2);
                     }
+
                     // no it isn't required, fine then
                 }
+
                 // then it's fine, no worries here
             }
-            
+
             // all finished. return it
             return new ReadOnlyCollection<Option>(optionList);
         }

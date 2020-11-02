@@ -16,6 +16,7 @@
         <PackageTags>tcping, tcp, client, framework</PackageTags>
         <PackageReleaseNotes>Added XML annotations.
 Now TcpingClient stores statistics data always the same internally. You can always switch Stats output by switching RealRtt option.</PackageReleaseNotes>
+        <Authors>Elepover</Authors>
     </PropertyGroup>
 
 </Project>

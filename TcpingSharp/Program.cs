@@ -18,7 +18,7 @@ namespace TcpingSharp
         private static int _exitCounter = 0;
         private static int _eventCounter = 0;
         private static Stopwatch _stopwatch = new Stopwatch();
-        
+
         private static void PrintHelp()
         {
             Console.WriteLine(
@@ -36,7 +36,7 @@ namespace TcpingSharp
                 "    -r, --rtt               Instead of showing time spent establishing a" + Environment.NewLine +
                 "                              TCP connection (~2x RTT), show half of the" + Environment.NewLine +
                 "                              value (~actual RTT)."
-                );
+            );
         }
 
         private static void WriteError(string message)
@@ -45,7 +45,7 @@ namespace TcpingSharp
             Console.Error.Write(message);
             Console.ResetColor();
         }
-        
+
         private static void WriteErrorLine(string message)
         {
             WriteError(message + Environment.NewLine);
@@ -56,28 +56,31 @@ namespace TcpingSharp
             foreach (var (ipAddress, rawStats) in stats)
             {
                 var extractedData = new List<double>(rawStats);
-                
+
                 Console.WriteLine($"--- {ipAddress} tcping statistics ---");
-                
+
                 // trim 0 (failed) from results
                 var failed = extractedData.Count(x => x == 0);
                 extractedData.RemoveAll(x => x == 0);
                 var succeeded = extractedData.Count;
                 var total = failed + succeeded;
-                
+
                 // calculate result and output
-                Console.WriteLine($"{total} connections attempted, {succeeded} succeeded, {(double)failed / total * 100:0.0}% failure chance");
+                Console.WriteLine(
+                    $"{total} connections attempted, {succeeded} succeeded, {(double)failed / total * 100:0.0}% failure chance");
                 if (extractedData.Count == 0)
                     WriteErrorLine("stats unavailable: no successful connection attempts");
                 else
-                    Console.WriteLine($"{(realRtt ? "" : "2x ")}round-trip min/avg/max/stddev = {extractedData.Min():0.000}/{extractedData.Average():0.000}/{extractedData.Max():0.000}/{extractedData.StdDev():0.000}ms");
+                    Console.WriteLine(
+                        $"{(realRtt ? "" : "2x ")}round-trip min/avg/max/stddev = {extractedData.Min():0.000}/{extractedData.Average():0.000}/{extractedData.Max():0.000}/{extractedData.StdDev():0.000}ms");
                 Console.WriteLine($"time spent: {_stopwatch.Elapsed:c}");
             }
         }
-        
+
         private static void Main(string[] args)
         {
             #region Parse arguments
+
             ParsedOptions opts;
             try
             {
@@ -90,9 +93,11 @@ namespace TcpingSharp
                 Environment.Exit(ex.HResult);
                 return;
             }
+
             #endregion
 
             #region Resolve IP addresses
+
             IPAddress[] addresses;
             try
             {
@@ -107,9 +112,11 @@ namespace TcpingSharp
                 Environment.Exit(ex.HResult);
                 return;
             }
+
             #endregion
 
             #region Print header
+
             Console.Write($"TCPING {opts.TcpingTarget}:{opts.Port} ");
             if (addresses.Length > 1)
             {
@@ -123,7 +130,8 @@ namespace TcpingSharp
             else
             {
                 var addr = addresses[0];
-                Console.WriteLine($"({addr}): {addr.AddressFamily switch { AddressFamily.InterNetwork => "IPv4, connect", AddressFamily.InterNetworkV6 => "IPv6, connect", _ => "?" }}");
+                Console.WriteLine(
+                    $"({addr}): {addr.AddressFamily switch {AddressFamily.InterNetwork => "IPv4, connect", AddressFamily.InterNetworkV6 => "IPv6, connect", _ => "?"}}");
             }
 
             Console.Write("options: ");
@@ -136,13 +144,17 @@ namespace TcpingSharp
             else
                 Console.Write("2xRTT");
             Console.WriteLine();
+
             #endregion
 
             #region Initialize tcping client
-            var client = new TcpingClient(addresses, opts.Port) { RealRtt = opts.RealRtt, Timeout = opts.Timeout };
+
+            var client = new TcpingClient(addresses, opts.Port) {RealRtt = opts.RealRtt, Timeout = opts.Timeout};
+
             #endregion
-            
+
             #region Subscribe event handlers
+
             Console.CancelKeyPress += (sender, eventArgs) =>
             {
                 _exitCounter++;
@@ -152,8 +164,10 @@ namespace TcpingSharp
                     WriteErrorLine("Terminating by force...");
                     Environment.Exit(1);
                 }
+
                 Utils.EraseLine();
-                Console.WriteLine($"Stopping... Press {remainingPresses} time{remainingPresses.S()} more to perform force quit.");
+                Console.WriteLine(
+                    $"Stopping... Press {remainingPresses} time{remainingPresses.S()} more to perform force quit.");
                 client.Stop(true);
                 eventArgs.Cancel = true;
             };
@@ -163,12 +177,13 @@ namespace TcpingSharp
                 var message = eventArgs.ToConsoleMessage(Console.BufferWidth, opts.Animate);
                 if (eventArgs.IsSuccessful)
                 {
-                    Console.Write(message);   
+                    Console.Write(message);
                 }
                 else
                 {
                     WriteError(message);
                 }
+
                 if (opts.PeriodicalStats)
                 {
                     _eventCounter++;
@@ -180,23 +195,28 @@ namespace TcpingSharp
                     }
                 }
             };
+
             #endregion
 
             #region Start working
+
             // start client
             client.Start();
             _stopwatch.Start();
-            
+
             // wait thread exit
             while (client.IsActive)
             {
                 Thread.Sleep(100);
             }
+
             #endregion
 
             #region Finish and show results
+
             // display summary
             PrintStats(client.Stats, opts.RealRtt);
+
             #endregion
         }
     }
