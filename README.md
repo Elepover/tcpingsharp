@@ -10,14 +10,14 @@ Compiled by
 
 | OS | Architecture | Download |
 | :----- | :----- | :----- |
-| Windows | x86 | [Download](https://ci.appveyor.com/api/projects/Elepover/tcpingsharp/artifacts/win-x86.zip) |
-| Windows | x64 | [Download](https://ci.appveyor.com/api/projects/Elepover/tcpingsharp/artifacts/win-x64.zip) |
-| Windows | arm | [Download](https://ci.appveyor.com/api/projects/Elepover/tcpingsharp/artifacts/win-arm.zip) |
-| Windows | arm64 | [Download](https://ci.appveyor.com/api/projects/Elepover/tcpingsharp/artifacts/win-arm64.zip) |
-| OS X / macOS | x64 | [Download](https://ci.appveyor.com/api/projects/Elepover/tcpingsharp/artifacts/osx-x64.zip) |
-| Linux | x64 | [Download](https://ci.appveyor.com/api/projects/Elepover/tcpingsharp/artifacts/linux-x64.zip) |
-| Linux | arm | [Download](https://ci.appveyor.com/api/projects/Elepover/tcpingsharp/artifacts/linux-arm.zip) |
-| Linux | arm64 | [Download](https://ci.appveyor.com/api/projects/Elepover/tcpingsharp/artifacts/linux-arm64.zip) |
+| Windows | x86 | [Download](https://ci.appveyor.com/api/projects/Elepover/tcpingsharp/artifacts/win-x86.zip?branch=master) |
+| Windows | x64 | [Download](https://ci.appveyor.com/api/projects/Elepover/tcpingsharp/artifacts/win-x64.zip?branch=master) |
+| Windows | arm | [Download](https://ci.appveyor.com/api/projects/Elepover/tcpingsharp/artifacts/win-arm.zip?branch=master) |
+| Windows | arm64 | [Download](https://ci.appveyor.com/api/projects/Elepover/tcpingsharp/artifacts/win-arm64.zip?branch=master) |
+| OS X / macOS | x64 | [Download](https://ci.appveyor.com/api/projects/Elepover/tcpingsharp/artifacts/osx-x64.zip?branch=master) |
+| Linux | x64 | [Download](https://ci.appveyor.com/api/projects/Elepover/tcpingsharp/artifacts/linux-x64.zip?branch=master) |
+| Linux | arm | [Download](https://ci.appveyor.com/api/projects/Elepover/tcpingsharp/artifacts/linux-arm.zip?branch=master) |
+| Linux | arm64 | [Download](https://ci.appveyor.com/api/projects/Elepover/tcpingsharp/artifacts/linux-arm64.zip?branch=master) |
 
 ## Features
 
