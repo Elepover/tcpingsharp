@@ -1,12 +1,14 @@
 # TcpingSharp
 
-[![Build status](https://ci.appveyor.com/api/projects/status/wlqxpimm4gpvbqhb?svg=true)](https://ci.appveyor.com/project/Elepover/tcpingsharp)
+[![Build status](https://ci.appveyor.com/api/projects/status/wlqxpimm4gpvbqhb?svg=true)](https://ci.appveyor.com/project/Elepover/tcpingsharp/build/artifacts)
 
 A simple, lightweight TCP Ping tool written in C#.
 
 ## Downloads
 
-Compiled by 
+Binaries available below are compiled from `master` branch for stability. To get the latest build, click the badge above.
+
+![](https://ci.appveyor.com/api/projects/status/wlqxpimm4gpvbqhb?svg=true&branch=master&passingText=build%3A%20latest%20available&pendingText=build%3A%20in%20progress&failingText=build%3A%20using%20fallback%20build)
 
 | OS | Architecture | Download |
 | :----- | :----- | :----- |
