@@ -35,7 +35,7 @@ namespace TcpingSharp.Tcping
 
         private readonly Dictionary<IPAddress, List<double>> _stats;
         private readonly List<Thread> _workers = new List<Thread>();
-        
+
         private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace TcpingSharp.Tcping
         public bool IsCancellationRequested => _cancellationTokenSource.IsCancellationRequested;
 
         /// <summary>
-        /// Stop pinging targets.
+        /// Request to stop pinging targets. This method will return immediately.
         /// </summary>
         /// <param name="force">Set the internal <see cref="CancellationToken"/> to cancel. Regardless of current <see cref="TcpingClient"/> status.</param>
         /// <exception cref="InvalidOperationException">The <see cref="TcpingClient"/> isn't active or is shutting down.</exception>
@@ -146,14 +146,6 @@ namespace TcpingSharp.Tcping
                 _workers.Add(thread);
                 thread.Start();
             }
-        }
-
-        /// <inheritdoc cref="PingAsync"/>
-        public static TimeSpan Ping(IPAddress address, int port, int timeout = 5000)
-        {
-            var task = PingAsync(address, port, timeout);
-            task.Wait();
-            return task.Result;
         }
 
         /// <summary>
