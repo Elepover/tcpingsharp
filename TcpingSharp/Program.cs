@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading;
+using System.Threading.Tasks;
 using TcpingSharp.CommandLine;
 using TcpingSharp.Tcping;
 
@@ -77,7 +77,7 @@ namespace TcpingSharp
             }
         }
 
-        private static void Main(string[] args)
+        private static async Task Main(string[] args)
         {
             #region Parse arguments
 
@@ -102,7 +102,7 @@ namespace TcpingSharp
             try
             {
                 Console.Write("Resolving addresses...");
-                addresses = Utils.ParseAddresses(opts.TcpingTarget, opts.ResolveMultipleIPs);
+                addresses = await Utils.ParseAddressesAsync(opts.TcpingTarget, opts.ResolveMultipleIPs);
                 Utils.EraseLine();
             }
             catch (Exception ex)
@@ -207,7 +207,7 @@ namespace TcpingSharp
             // wait thread exit
             while (client.IsActive)
             {
-                Thread.Sleep(100);
+                await Task.Delay(100);
             }
 
             #endregion

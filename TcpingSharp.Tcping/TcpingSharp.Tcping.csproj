@@ -5,7 +5,7 @@
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-        <PackageVersion>1.0.26-beta</PackageVersion>
+        <PackageVersion>1.0.28-beta</PackageVersion>
         <Title>TcpingSharp.Tcping</Title>
         <Description>A lightweight TCP pinging client for .NET projects.</Description>
         <Copyright>Copyright (C) 2020 Elepover</Copyright>
@@ -14,8 +14,8 @@
         <RepositoryUrl>https://github.com/Elepover/tcpingsharp</RepositoryUrl>
         <RepositoryType>public</RepositoryType>
         <PackageTags>tcping, tcp, client, framework</PackageTags>
-        <PackageReleaseNotes>Added XML annotations.
-Now TcpingClient stores statistics data always the same internally. You can always switch Stats output by switching RealRtt option.</PackageReleaseNotes>
+        <PackageReleaseNotes>Further improved internal logics.
+Added option to ping server once.</PackageReleaseNotes>
         <Authors>Elepover</Authors>
     </PropertyGroup>
 
